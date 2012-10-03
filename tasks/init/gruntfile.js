@@ -1,10 +1,9 @@
 /*
- * grunt
- * http://gruntjs.com/
+ * grunt-init
+ * https://gruntjs.com/
  *
- * Copyright (c) 2012 "Cowboy" Ben Alman
+ * Copyright (c) 2012 "Cowboy" Ben Alman, contributors
  * Licensed under the MIT license.
- * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
 'use strict';

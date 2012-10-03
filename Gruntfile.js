@@ -1,5 +1,5 @@
 /*
- * grunt-contrib-init
+ * grunt-init
  * https://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman, contributors
