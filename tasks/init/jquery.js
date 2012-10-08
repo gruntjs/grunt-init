@@ -48,13 +48,6 @@ exports.template = function(grunt, init, done) {
     // A few additional properties.
     props.jqueryjson = props.name + '.jquery.json';
     props.dependencies = {jquery: props.jquery_version || '>= 1'};
-    props.devDependencies = {
-      'grunt-contrib-jshint': '0.1.0',
-      'grunt-contrib-qunit': '0.1.0',
-      'grunt-contrib-concat': '0.1.0',
-      'grunt-contrib-uglify': '0.1.0',
-      'grunt': '0.4.0a'
-    };
 
     props.keywords = [];
 
@@ -74,6 +67,12 @@ exports.template = function(grunt, init, done) {
       npm_test: 'grunt qunit',
       // TODO: pull from grunt's package.json
       node_version: '>= 0.6.0',
+      devDependencies: {
+        'grunt-contrib-jshint': '0.1.0',
+        'grunt-contrib-qunit': '0.1.0',
+        'grunt-contrib-concat': '0.1.0',
+        'grunt-contrib-uglify': '0.1.0',
+      },
     });
 
     // Generate jquery.json file.
