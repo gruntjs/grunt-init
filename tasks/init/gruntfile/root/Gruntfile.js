@@ -67,7 +67,7 @@ module.exports = function(grunt) {
       files: ['{%= test_dir %}/**/*.html']
     },{% } else { %}
     {%= test_task %}: {
-      files: ['{%= test_dir %}/**/*.js']
+      files: ['{%= test_dir %}/**/*_test.js']
     },{% } %}
     watch: {
       gruntfile: {
