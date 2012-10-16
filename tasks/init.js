@@ -36,12 +36,7 @@ module.exports = function(grunt) {
     var args = grunt.util.toArray(arguments);
     // Template name.
     var name = args.shift();
-    // Default to last-specified grunt.npmTasks plugin name if template name
-    // was omitted. Note that specifying just a : after init like "grunt init:"
-    // will allow all available templates to be listed.
-    if (name == null) {
-      name = grunt._npmTasks[grunt._npmTasks.length - 1];
-    }
+
     // Valid init templates (.js or .coffee files).
     var templates = {};
     grunt.task.expandFiles('init/*.{js,coffee}').forEach(function(fileobj) {
