@@ -46,6 +46,20 @@ module.exports = function(grunt) {
     });
     var initTemplate = templates[name];
 
+    // Abort if a valid template was not specified.
+    if (!initTemplate) {
+      if (name) {
+        grunt.log.write('Loading "' + name + '" init template...').error();
+      }
+      grunt.log.writelns(
+        '\n' +
+        'A valid init template name must be specified. For a list of available ' +
+        'init templates and options, run ' + path.basename(process.argv[1]) + ' --help.' +
+        '\n'
+      );
+      grunt.fatal('A valid init template name must be specified.');
+    }
+
     // Give the user a little help.
     grunt.log.writelns(
       'This task will create one or more files in the current directory, ' +
@@ -53,21 +67,6 @@ module.exports = function(grunt) {
       'Note that answering "?" to any question will show question-specific ' +
       'help and answering "none" to most questions will leave its value blank.'
     );
-
-    // Abort if a valid template was not specified.
-    if (!initTemplate) {
-      grunt.log.writeln();
-      if (name) {
-        grunt.log.write('Loading "' + name + '" init template...').error();
-      }
-      grunt.log.writelns('A valid init template name must be specified, eg. ' +
-        '"grunt init:commonjs". The currently-available templates are:');
-      Object.keys(templates).forEach(function(name) {
-        var description = templates[name].description || '(no description)';
-        grunt.log.writelns(name.cyan + ' - ' + description);
-      });
-      return !name;
-    }
 
     // Abort if matching files or directories were found (to avoid accidentally
     // nuking them).
