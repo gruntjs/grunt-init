@@ -17,24 +17,33 @@ var pkg = require(asset('package.json'));
 
 // Grunt.
 var grunt = require('grunt');
+var file = require(asset('tasks/lib/file')).init(grunt);
 
 // Hook into grunt.task.init to load the built-in init task.
 hooker.hook(grunt.task, 'init', function() {
   grunt.task.loadTasks(asset('tasks'));
 });
 
+var name;
 if (grunt.cli.tasks.length === 0) {
   // No task was specified on the command line, so run the init task
   // without any arguments.
   grunt.cli.tasks = ['init'];
 } else {
+  name = grunt.cli.tasks[0];
   // For the specified "task" prepend "init:" so the init task doesn't
   // actually need to be specified on the command line.
-  grunt.cli.tasks = ['init:' + grunt.cli.tasks[0]];
+  grunt.cli.tasks = ['init:' + name];
 }
 
 // Remove grunt options that don't really make any sense for grunt-init.
-['base', 'gruntfile', 'completion', 'npm'].forEach(function(option) {
+[
+  'base',
+  'tasks',
+  'gruntfile',
+  'completion',
+  'npm',
+].forEach(function(option) {
   delete grunt.cli.optlist[option];
 });
 
@@ -66,9 +75,10 @@ var templates;
 grunt.help.initTemplates = function() {
   // Initialize task system so that the templates can be listed.
   grunt.task.init([], {help: true});
-
+  // Initialize searchDirs so template assets can be found.
+  file.initSearchDirs(name);
   // Valid init templates (.js or .coffee files).
-  templates = grunt.task.expandFiles('init/*.{js,coffee}').map(function(fileobj) {
+  templates = file.getTemplates().map(function(fileobj) {
     var name = path.basename(fileobj.abs).replace(/\.(?:js|coffee)/, '');
     var description = require(fileobj.abs).description;
     grunt.help.initCol1(name);
@@ -77,9 +87,12 @@ grunt.help.initTemplates = function() {
 };
 
 grunt.help.templates = function() {
-  // grunt.log.header('Available templates');
+  grunt.log.header('Available templates');
   grunt.help.table(templates);
-  grunt.log.writeln().writeln('A valid init template name must be specified, eg. "grunt-init commonjs".');
+  grunt.log.writeln().writelns(
+    'A valid template name or filepath must be specified, eg. ' +
+    '"grunt-init jquery" or "grunt-init /path/to/template.js".'
+  );
 };
 
 // Start grunt.
