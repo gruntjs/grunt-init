@@ -3,13 +3,6 @@
 var grunt = require('grunt');
 var git = require('../tasks/lib/git').init(grunt);
 
-// In case the grunt being used to test is different than the grunt being
-// tested, initialize the task and config subsystems.
-if (grunt.task.searchDirs.length === 0) {
-  grunt.task.init([]);
-  grunt.config.init({});
-}
-
 exports['git.githubUrl'] = {
   'no args': function(test) {
     test.expect(1);
