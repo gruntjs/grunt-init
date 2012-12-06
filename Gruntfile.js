@@ -37,8 +37,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
+  // Whenever the "test" task is run, run some tests.
   grunt.registerTask('test', 'nodeunit');
 
   // By default, lint and run all tests.
