@@ -1,59 +1,72 @@
 # grunt-init (unreleased)
 
-> Generate project scaffolding from a template.
+## Getting Started
+Grunt-init is a scaffolding tool used to automate project creation. It will build an entire directory structure based on the current environment and the answers to a few questions. The exact files and contents created depend on the template chosen along with the answers to the questions asked.
 
-**NOTE: THIS DOCUMENTATION IS OUT OF DATE AND NEEDS TO BE UPDATED**
+_Note: This standalone utility used to be built-in to grunt as the "init" task. See the grunt [Upgrading from 0.3 to 0.4](https://github.com/gruntjs/grunt/wiki/Upgrading-from-0.3-to-0.4) guide for more information about this change._
 
-## About
+## Installation
+In order to use grunt-init, you'll want to install it globally.
 
-The `init` task initializes a new project, based on the current environment and the answers to a few questions. Once complete, a [Gruntfile.js configuration file](getting_started.md) will be generated along with a complete directory structure, including a basic readme, license, package.json, sample source files and unit tests (etc).
+```shell
+npm install -g grunt-init
+```
 
-The exact files and contents created depend on the template chosen along with the answers to the questions asked.
+This will put the `grunt-init` command in your system path, allowing it to be run from anywhere.
 
-Unlike other tasks, init should only ever be run once for a project. Typically, it is run at the very beginning before work has begun, but it can be run later. **Just keep in mind that new files are generated, so for existing projects, ensure that everything is already committed first.**
+_Notes: You may need to use sudo or run your command shell as Administrator to do this._
 
-## Usage examples
+[Getting Started]: http://gruntjs.com/getting-started
 
-Change to a new directory, and type in `grunt init:TEMPLATE` where TEMPLATE is one of the following templates. Answer the questions. Watch grunt do its thing. Done. Now you have fully initialized project scaffolding that you can customize, `grunt` and publish.
+## Usage
+* Get program help and a listing of built-in templates with `grunt-init --help`
+* Create a project based around a built-in template with `grunt-init templatename`
+* Create a project based around a custom template with `grunt-init /path/to/template.js`
+
+Note that most templates generate their files in the current directory, so be sure to change to a new directory first if you don't want to overwrite existing files.
 
 ## Built-in templates
+grunt-init currently includes these basic templates.
 
-The init task currently supports a number of built-in templates.
+* commonjs - Create a commonjs module, including Nodeunit unit tests. ([sample "generated" repo](https://github.com/gruntjs/grunt-init-commonjs-sample/tree/generated) | [creation transcript](https://github.com/gruntjs/grunt-init-commonjs-sample#project-creation-transcript))
+* gruntfile - Create a basic Gruntfile. ([sample "generated" repo](https://github.com/gruntjs/grunt-init-gruntfile-sample/tree/generated) | [creation transcript](https://github.com/gruntjs/grunt-init-gruntfile-sample#project-creation-transcript))
+* gruntplugin - Create a grunt plugin, including Nodeunit unit tests. ([sample "generated" repo](https://github.com/gruntjs/grunt-init-gruntplugin-sample/tree/generated) | [creation transcript](https://github.com/gruntjs/grunt-init-gruntplugin-sample#project-creation-transcript))
+* jquery - Create a jQuery plugin, including QUnit unit tests. ([sample "generated" repo](https://github.com/gruntjs/grunt-init-jquery-sample/tree/generated) | [creation transcript](https://github.com/gruntjs/grunt-init-jquery-sample#project-creation-transcript))
+* node - Create a Node.js module, including Nodeunit unit tests. ([sample "generated" repo](https://github.com/gruntjs/grunt-init-node-sample/tree/generated) | [creation transcript](https://github.com/gruntjs/grunt-init-node-sample#project-creation-transcript))
 
-### Gruntfile
-Generated via `grunt init:gruntfile`, this customizable template creates a single [Gruntfile](getting_started.md) based on the answers to a few questions and some highly advanced "fuzzy logic" that tries to determine source and unit test paths. This is the template you want to use to generate a Gruntfile for an existing project.
+If you're curious to see what these templates generate, `cd` into an empty directory, run `grunt-init templatename`, answer the questions, and inspect the result. Or check out the listed sample "generated" repos and creation transcripts.
 
-If your code is DOM-related, [QUnit unit tests](task_qunit.md) will be used, otherwise [Nodeunit unit tests](task_test.md) will be used. Where appropriate, predefined [lint](task_lint.md), [concat](task_concat.md) and [minification](task_min.md) tasks are generated. Also, depending on the library used, JSHint globals may be predefined (just `jQuery` for now).
+## Custom templates
+You can create and use custom templates. Your template must follow the same structure as the [built-in templates][].
 
-**You will most likely need to edit the generated Gruntfile.js file before running `grunt`. If you run grunt after generating Gruntfile.js, and it exits with errors, edit the Gruntfile.js file!**
+[built-in templates]: https://github.com/gruntjs/grunt-init/tree/standalone/init
 
-_See an [example repo](https://github.com/gruntjs/grunt-init-gruntfile-sample/tree/generated) generated by this template along with the [creation transcript](https://github.com/gruntjs/grunt-init-gruntfile-sample#project-creation-transcript)._
+A sample template named `my-template` would follow this general file structure:
 
-### commonjs
-Generated via `grunt init:commonjs`, this customizable template creates an entire project directory structure with a [Gruntfile](getting_started.md), Npm-friendly package.json file, sample [CommonJS](http://www.commonjs.org/) source file and Nodeunit unit tests.
+* `my-template.js` - the main template file.
+* `my-template/rename.json` - template-specific rename rules, processed as templates.
+* `my-template/root/` - files to be copied into the target location.
 
-In addition, predefined [lint](task_lint.md), [concat](task_concat.md) and [minification](task_min.md) tasks are generated.
+Assuming these files exist under the directory `/path/to/`, the command `grunt-init /path/to/my-template.js` would be used to process the template. Multiple uniquely-named templates may exist in the same directory, just like the [built-in templates][].
 
-_See an [example repo](https://github.com/gruntjs/grunt-init-commonjs-sample/tree/generated) generated by this template along with the [creation transcript](https://github.com/gruntjs/grunt-init-commonjs-sample#project-creation-transcript)._
+Additionally, if you were to place this custom template in your `~/.grunt-init/` directory (`%USERPROFILE%\.grunt-init\` on Windows) it would be automatically available to be used with just `grunt-init my-template`.
 
-### jquery
-Generated via `grunt init:jquery`, this customizable template creates an entire project directory structure with a [Gruntfile](getting_started.md), [jQuery package.json](https://github.com/jquery/plugins.jquery.com/blob/master/docs/package.md) file, [jQuery](http://jquery.com/) plugin file and [QUnit unit tests](task_qunit.md).
+### Copying files
+As long as a template uses the `init.filesToCopy` and `init.copyAndProcess` methods, any files in the `root/` subdirectory will be copied to the current directory when the init template is run.
 
-In addition, predefined [lint](task_lint.md), [concat](task_concat.md) and [minification](task_min.md) tasks are generated.
+Note that all copied files will be processed as templates, with any `{% %}` template being processed against the collected `props` data object, unless the `noProcess` option is set. See the [jquery template](https://github.com/gruntjs/grunt-init/blob/master/init/jquery.js) for an example.
 
-_See an [example repo](https://github.com/gruntjs/grunt-init-jquery-sample/tree/generated) generated by this template along with the [creation transcript](https://github.com/gruntjs/grunt-init-jquery-sample#project-creation-transcript)._
+### Renaming or excluding template files
+The `rename.json` describes `sourcepath` to `destpath` rename mappings. The `sourcepath` must be the path of the file-to-be-copied relative to the `root/` folder, but the `destpath` value can contain `{% %}` templates, describing what the destination path will be.
 
-### node
-Generated via `grunt init:node`, this customizable template creates an entire project directory structure with a [Gruntfile](getting_started.md), Npm package.json file, sample [Node.js](http://nodejs.org/) source file and Nodeunit unit tests.
-
-_See an [example repo](https://github.com/gruntjs/grunt-init-node-sample/tree/generated) generated by this template along with the [creation transcript](https://github.com/gruntjs/grunt-init-node-sample#project-creation-transcript)._
+If `false` is specified as a `destpath` the file will not be copied. Also, glob patterns are supported for `srcpath`.
 
 ## Specifying default prompt answers
-Each init prompt either has a default value hard-coded or it looks at the current environment to attempt to determine that default value. If you want to override a particular prompt's default value, you can do so in the optional OS X or Linux `~/.grunt/tasks/init/defaults.json` or Windows `%USERPROFILE%\.grunt\tasks\init\defaults.json` file.
+Each init prompt either has a default value hard-coded or it looks at the current environment to attempt to determine that default value. If you want to override a particular prompt's default value, you can do so in the optional OS X or Linux `~/.grunt-init/defaults.json` or Windows `%USERPROFILE%\.grunt-init\defaults.json` file.
 
 For example, my `defaults.json` file looks like this, because I want to use a slightly different name than the default name, I want to exclude my email address, and I want to specify an author url automatically.
 
-```javascript
+```json
 {
   "author_name": "\"Cowboy\" Ben Alman",
   "author_email": "none",
@@ -61,80 +74,35 @@ For example, my `defaults.json` file looks like this, because I want to use a sl
 }
 ```
 
-_Note: until all the built-in prompts have been documented, you can find each prompt name in the [init templates' source .js files](../tasks/init)._
+_Note: until all the built-in prompts have been documented, you can find all the built-in prompt names and default values in the [source code](https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js)._
 
-## Overriding template files
-You can override any init template file, even the init template itself.
-
-For example, the "jquery" init template exists inside of grunt at this path:
-
-* [tasks/init/jquery.js](../tasks/init/jquery.js)
-
-A set of jquery-template-specific rename rules exists at this path:
-
-* [tasks/init/jquery/rename.json](../tasks/init/jquery/rename.json)
-
-And any files to be copied by this template (because the template uses the `init.filesToCopy` and `init.copyAndProcess` methods), exist here:
-
-* [tasks/init/jquery/root/](../tasks/init/jquery/root)
-
-_Any_ of these files can be overridden via a referenced [grunt plugin](plugins.md) or tasks directory, OR via your [grunt.file.userDir](api_file.md) which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. This directory structure mimics grunt's internal directory structure.
-
-So you can override any of the aforementioned things for a given init template `TEMPLATE` with these OS X / linux paths:
-
-* `~/.grunt/tasks/init/TEMPLATE.js`
-* `~/.grunt/tasks/init/TEMPLATE/rename.json`
-* `~/.grunt/tasks/init/TEMPLATE/root/`
-
-Or these Windows paths (`%USERPROFILE%` is generally your `Documents and Settings` directory):
-
-* `%USERPROFILE%\.grunt\tasks\init\TEMPLATE.js`
-* `%USERPROFILE%\.grunt\tasks\init\TEMPLATE\rename.json`
-* `%USERPROFILE%\.grunt\tasks\init\TEMPLATE\root\`
-
-If you wanted to change the `gruntfile` init template `Gruntfile.js` file, you could copy grunt's own [tasks/init/gruntfile/root/Gruntfile.js](../tasks/init/gruntfile/root/Gruntfile.js) to `~/.grunt/tasks/init/gruntfile/root/Gruntfile.js` (or the Windows equivalent), edit it as you see fit, and when you run `grunt init:gruntfile` grunt will use your file.
-
-Assuming the template uses the `init.filesToCopy` and `init.copyAndProcess` methods, you can add any additional files into that "root" folder, with any arbitrarily-nested directory structure, and those files will be copied to the current directory when the init template is run.
-
-For example, since the `gruntfile` init template is just two files, the [tasks/init/gruntfile.js](../tasks/init/gruntfile.js) template and the [tasks/init/gruntfile/root/Gruntfile.js](../tasks/init/gruntfile/root/Gruntfile.js) file-to-be-copied, you could completely change its behavior by overriding both of those files.
-
-## Renaming or excluding template files
-If, for some reason, you want to rename or exclude files, you can edit the aforementioned `rename.json` which describes a map of `sourcepath` to `destpath` values. The `sourcepath` must be the path of the file-to-be-copied relative to the `root/` folder, but the `destpath` value can contain `{% %}` init templates, as in any init file, and describes what the destination path will be. See the `jquery` init template [rename.json](../tasks/init/jquery/rename.json) file for an example.
-
-A few notes about `rename.json`:
-
-* If `false` is specified as a `destpath` the file will not be copied (glob pattern is supported for `srcpath`).
-* The `rename.json` file is _merged_ using `grunt.task.readDefaults` so it _overrides_ built-in values.
-
-## Creating custom templates
-You create a custom template the exact same way you override init templates and their files, you just use a unique template name. in your userDir, just create a `~/.grunt/tasks/init/MYTEMPLATE.js` and any other relevant files. See the "Overriding template files" and "Renaming or excluding template files" sections for all the details.
 
 ## Defining an init template
 
 ### exports.description
-This brief template description will be displayed along with the template name when the user runs `grunt init` or `grunt init:` to display a list of all available init templates.
+This brief template description will be displayed along with the template name when the user runs `grunt init` or `grunt-init ` to display a list of all available init templates.
 
-```javascript
+```js
 exports.description = descriptionString;
 ```
 
 ### exports.notes
 If specified, this optional extended description will be displayed before any prompts are displayed. This is a good place to give the user a little help explaining naming conventions, which prompts may be required or optional, etc.
 
-```javascript
+```js
 exports.notes = notesString;
 ```
 
 ### exports.warnOn
 If this optional (but recommended) wildcard pattern or array of wildcard patterns is matched, grunt will abort with a warning that the user can override with `--force`. This is very useful in cases where the init template could potentially override existing files.
 
-```javascript
+```js
 exports.warnOn = wildcardPattern;
 ```
 
 While the most common value will be `'*'`, matching any file or directory, the [minimatch](https://github.com/isaacs/minimatch) wildcard pattern syntax used allows for a lot of flexibility. For example:
 
-```javascript
+```js
 exports.warnOn = 'Gruntfile.js';        // Warn on a Gruntfile.js file.
 exports.warnOn = '*.js';            // Warn on any .js file.
 exports.warnOn = '*';               // Warn on any non-dotfile or non-dotdir.
@@ -150,7 +118,7 @@ exports.warnOn = ['*.png', '*.gif', '*.jpg'];
 ### exports.template
 While the `exports` properties are defined outside this function, all the actual init code is specified inside. Three arguments are passed into this function. The `grunt` argument is a reference to grunt, containing all the [grunt methods and libs](api.md). The `init` argument is an object containing methods and properties specific to this init template. The `done` argument is a function that must be called when the init template is done executing.
 
-```javascript
+```js
 exports.template = function(grunt, init, done) {
   // See the "Inside an init template" section.
 };
@@ -161,5 +129,3 @@ _(Documentation coming soon)_
 
 ## Built-in prompts
 _(Documentation coming soon)_
-
-See the [init task source](../tasks/init.js) for more information.
