@@ -95,5 +95,10 @@ grunt.help.templates = function() {
   );
 };
 
+// Display version number if asked.
+if (grunt.cli.options.version) {
+  console.log('grunt-init v' + pkg.version);
+}
+
 // Start grunt.
 grunt.cli();
