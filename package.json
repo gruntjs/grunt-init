@@ -1,7 +1,7 @@
 {
   "name": "grunt-init",
   "description": "Generate project scaffolding from a template.",
-  "version": "0.1.0",
+  "version": "0.2.0rc1",
   "homepage": "https://github.com/gruntjs/grunt-init",
   "author": {
     "name": "Grunt Team",
@@ -33,7 +33,7 @@
     "semver": "~1.0.14",
     "hooker": "~0.2.3",
     "colors": "~0.6.0-1",
-    "grunt": "~0.4.0a"
+    "grunt": "~0.4.0rc1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.0",
