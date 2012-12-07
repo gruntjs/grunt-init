@@ -32,6 +32,7 @@
     "prompt": "~0.1.12",
     "semver": "~1.0.14",
     "hooker": "~0.2.3",
+    "colors": "~0.6.0-1",
     "grunt": "~0.4.0a"
   },
   "devDependencies": {

@@ -9,6 +9,10 @@ var path = require('path');
 // External libs.
 var hooker = require('hooker');
 
+// This has to be loaded before the "prompt" dep loads it, or colors won't
+// get disabled with --no-color correctly.
+require('colors');
+
 // Get the path to an asset, relative to this module's root directory.
 var asset = path.resolve.bind(null, __dirname, '..');
 
