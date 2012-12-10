@@ -40,5 +40,10 @@
     "grunt-contrib-nodeunit": "~0.1.0"
   },
   "keywords": [
+    "grunt",
+    "template",
+    "scaffold",
+    "generate",
+    "project"
   ]
 }
