@@ -21,7 +21,7 @@ _Notes: You may need to use sudo or run your command shell as Administrator to d
 ## Usage
 * Get program help and a listing of built-in templates with `grunt-init --help`
 * Create a project based around a built-in template with `grunt-init templatename`
-* Create a project based around a custom template with `grunt-init /path/to/template.js`
+* Create a project based around a custom template with `grunt-init /path/to/template`
 
 Note that most templates generate their files in the current directory, so be sure to change to a new directory first if you don't want to overwrite existing files.
 
@@ -39,17 +39,17 @@ If you're curious to see what these templates generate, `cd` into an empty direc
 ## Custom templates
 You can create and use custom templates. Your template must follow the same structure as the [built-in templates][].
 
-[built-in templates]: https://github.com/gruntjs/grunt-init/tree/standalone/init
+[built-in templates]: https://github.com/gruntjs/grunt-init/tree/master/templates
 
 A sample template named `my-template` would follow this general file structure:
 
-* `my-template.js` - the main template file.
+* `my-template/template.js` - the main template file.
 * `my-template/rename.json` - template-specific rename rules, processed as templates.
 * `my-template/root/` - files to be copied into the target location.
 
-Assuming these files exist under the directory `/path/to/`, the command `grunt-init /path/to/my-template.js` would be used to process the template. Multiple uniquely-named templates may exist in the same directory, just like the [built-in templates][].
+Assuming these files exist at `/path/to/my-template`, the command `grunt-init /path/to/my-template` would be used to process the template. Multiple uniquely-named templates may exist in the same directory, just like the [built-in templates][].
 
-Additionally, if you were to place this custom template in your `~/.grunt-init/` directory (`%USERPROFILE%\.grunt-init\` on Windows) it would be automatically available to be used with just `grunt-init my-template`.
+Additionally, if you place this custom template in your `~/.grunt-init/` directory (`%USERPROFILE%\.grunt-init\` on Windows) it will be automatically available to be used with just `grunt-init my-template`.
 
 ### Copying files
 As long as a template uses the `init.filesToCopy` and `init.copyAndProcess` methods, any files in the `root/` subdirectory will be copied to the current directory when the init template is run.
@@ -74,7 +74,7 @@ For example, my `defaults.json` file looks like this, because I want to use a sl
 }
 ```
 
-_Note: until all the built-in prompts have been documented, you can find all the built-in prompt names and default values in the [source code](https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js)._
+_Note: until all the built-in prompts have been documented, you can find their names and default values in the [source code](https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js)._
 
 
 ## Defining an init template

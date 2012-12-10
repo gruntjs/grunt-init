@@ -32,12 +32,7 @@ module.exports = function(grunt) {
     var name = file.initSearchDirs(args.shift());
 
     // Valid init templates (.js or .coffee files).
-    var templates = {};
-    file.getTemplates().forEach(function(fileobj) {
-      // Add template (plus its path) to the templates object.
-      var basename = path.basename(fileobj.abs).replace(/\.(?:js|coffee)/, '');
-      templates[basename] = require(fileobj.abs);
-    });
+    var templates = file.getTemplates();
     var initTemplate = templates[name];
 
     // Abort if a valid template was not specified.

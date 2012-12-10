@@ -79,7 +79,13 @@ exports.init = function(grunt) {
   exports.expandFiles = expandByMethod.bind(null, 'expandFiles');
 
   // Get all templates.
-  exports.getTemplates = exports.expandFiles.bind(exports, '*.{js,coffee}');
+  exports.getTemplates = function() {
+    var templates = {};
+    exports.expandFiles('*/template.{js,coffee}').forEach(function(fileobj) {
+      templates[fileobj.rel.split(path.sep)[0]] = require(fileobj.abs);
+    });
+    return templates;
+  };
 
   // Get a single task file path.
   exports.getFile = function() {
@@ -104,7 +110,7 @@ exports.init = function(grunt) {
       name = path.basename(name, '.js');
     }
     // Add internal templates to searchDirs.
-    exports.searchDirs.unshift(path.resolve(__dirname, '../../init'));
+    exports.searchDirs.unshift(path.resolve(__dirname, '../../templates'));
 
     // Search dirs should be unique and fully normalized absolute paths.
     exports.searchDirs = grunt.util._.uniq(exports.searchDirs).map(function(filepath) {

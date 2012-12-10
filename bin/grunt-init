@@ -82,9 +82,9 @@ grunt.help.initTemplates = function() {
   // Initialize searchDirs so template assets can be found.
   file.initSearchDirs(name);
   // Valid init templates (.js or .coffee files).
-  templates = file.getTemplates().map(function(fileobj) {
-    var name = path.basename(fileobj.abs).replace(/\.(?:js|coffee)/, '');
-    var description = require(fileobj.abs).description;
+  var templatesMap = file.getTemplates();
+  templates = Object.keys(templatesMap).map(function(name) {
+    var description = templatesMap[name].description;
     grunt.help.initCol1(name);
     return [name, description || '(no description)'];
   });
@@ -94,8 +94,11 @@ grunt.help.templates = function() {
   grunt.log.header('Available templates');
   grunt.help.table(templates);
   grunt.log.writeln().writelns(
-    'A valid template name or filepath must be specified, eg. ' +
-    '"grunt-init jquery" or "grunt-init /path/to/template.js".'
+    'Available templates that are either builtin to grunt-init or placed ' +
+    'in the ' + file.userDir() + ' directory may be run ' +
+    'with "grunt-init TEMPLATE". Templates that exist in another location ' +
+    'may be run with "grunt-init /path/to/TEMPLATE". A valid template ' +
+    'directory must contain, at the very minimum, a template.js file.'
   );
 };
 
