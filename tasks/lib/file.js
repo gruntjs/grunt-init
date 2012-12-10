@@ -107,7 +107,7 @@ exports.init = function(grunt) {
     // Add dirname of specified template file to searchDirs.
     if (name && grunt.file.exists(name)) {
       exports.searchDirs.unshift(path.dirname(name));
-      name = path.basename(name, '.js');
+      name = path.basename(path.resolve(name), '.js');
     }
     // Add internal templates to searchDirs.
     exports.searchDirs.unshift(path.resolve(__dirname, '../../templates'));
