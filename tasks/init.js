@@ -21,6 +21,10 @@ module.exports = function(grunt) {
   var file = require('./lib/file').init(grunt);
   var prompt = require('./lib/prompt').init(grunt, file);
 
+  // The "init" task needs separate delimiters to avoid conflicts, so the <>
+  // are replaced with {}. Otherwise, they behave the same.
+  grunt.template.addDelimiters('init', '{%', '%}');
+
   // ==========================================================================
   // TASKS
   // ==========================================================================
