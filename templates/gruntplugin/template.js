@@ -25,7 +25,18 @@ exports.template = function(grunt, init, done) {
     // Prompt for these values.
     init.prompt('name', function(value, props, done) {
       // Prepend grunt- to default name.
-      done(null, 'grunt-' + value);
+      var name = 'grunt-' + value;
+
+      // Replace 'grunt-contrib' with 'grunt' and give a warning
+      if (/^grunt-contrib/.test(name)) {
+        var message = 'Omitting "contrib" from your project\'s name. The grunt-contrib ' +
+                      'namespace is reserved for tasks maintained by the grunt team.';
+
+        grunt.log.writelns(message.red);
+        name = name.replace(/^grunt-contrib/,'grunt');
+      }
+
+      done(null, name);
     }),
     init.prompt('description', 'The best grunt plugin ever.'),
     init.prompt('version'),
