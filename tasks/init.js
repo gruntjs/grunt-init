@@ -18,8 +18,8 @@ module.exports = function(grunt) {
 
   // Internal libs.
   var git = require('./lib/git').init(grunt);
-  var file = require('./lib/file').init(grunt);
-  var prompt = require('./lib/prompt').init(grunt, file);
+  var helpers = require('./lib/helpers').init(grunt);
+  var prompt = require('./lib/prompt').init(grunt, helpers);
 
   // The "init" task needs separate delimiters to avoid conflicts, so the <>
   // are replaced with {}. Otherwise, they behave the same.
@@ -33,10 +33,10 @@ module.exports = function(grunt) {
     // Extra arguments will be applied to the template file.
     var args = grunt.util.toArray(arguments);
     // Initialize searchDirs so template assets can be found.
-    var name = file.initSearchDirs(args.shift());
+    var name = helpers.initSearchDirs(args.shift());
 
     // Valid init templates (.js or .coffee files).
-    var templates = file.getTemplates();
+    var templates = helpers.getTemplates();
     var initTemplate = templates[name];
 
     // Abort if a valid template was not specified.
@@ -193,7 +193,7 @@ module.exports = function(grunt) {
         default: 'MIT',
         validator: /^[\w\-\.\d]+(?:\s+[\w\-\.\d]+)*$/,
         warning: 'Must be zero or more space-separated licenses. Built-in ' +
-          'licenses are: ' + file.availableLicenses().join(' ') + ', but you may ' +
+          'licenses are: ' + helpers.availableLicenses().join(' ') + ', but you may ' +
           'specify any number of custom licenses.',
         // Split the string on spaces.
         sanitize: function(value, data, done) { done(value.split(/\s+/)); }
@@ -276,16 +276,16 @@ module.exports = function(grunt) {
       prompt: prompt.prompt,
       prompts: prompt.prompts,
       // Expose any user-specified default init values.
-      defaults: file.readDefaults('defaults.json'),
+      defaults: helpers.readDefaults('defaults.json'),
       // Expose rename rules for this template.
-      renames: file.readDefaults(name, 'rename.json'),
+      renames: helpers.readDefaults(name, 'rename.json'),
       // Return an object containing files to copy with their absolute source path
       // and relative destination path, renamed (or omitted) according to rules in
       // rename.json (if it exists).
       filesToCopy: function(props) {
         var files = {};
         // Include all template files by default.
-        file.expandFiles({dot: true}, [pathPrefix + '**']).forEach(function(obj) {
+        helpers.expandFiles({dot: true}, [pathPrefix + '**']).forEach(function(obj) {
           // Get the source filepath relative to the template root.
           var src = obj.rel.slice(pathPrefix.length);
           // Get the destination filepath.
@@ -301,7 +301,7 @@ module.exports = function(grunt) {
         });
         // Exclude all exclusion files by deleting them from the files object.
         if (exclusions.length > 0) {
-          file.expandFiles({dot: true}, exclusions).forEach(function(obj) {
+          helpers.expandFiles({dot: true}, exclusions).forEach(function(obj) {
             // Get the source filepath relative to the template root.
             var src = obj.rel.slice(pathPrefix.length);
             // And remove that file from the files list.
@@ -314,7 +314,7 @@ module.exports = function(grunt) {
       srcpath: function(arg1) {
         if (arg1 == null) { return null; }
         var args = [name, 'root'].concat(grunt.util.toArray(arguments));
-        return file.getFile.apply(file, args);
+        return helpers.getFile.apply(helpers, args);
       },
       // Determine absolute destination file path.
       destpath: path.join.bind(path, process.cwd()),
@@ -322,7 +322,7 @@ module.exports = function(grunt) {
       // files object.
       addLicenseFiles: function(files, licenses) {
         licenses.forEach(function(license) {
-          var fileobj = file.expandFiles('licenses/LICENSE-' + license)[0];
+          var fileobj = helpers.expandFiles('licenses/LICENSE-' + license)[0];
           files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
         });
       },
@@ -341,7 +341,7 @@ module.exports = function(grunt) {
         }
         // Use placeholder file if no src exists.
         if (!srcpath) {
-          srcpath = file.getFile('misc/placeholder');
+          srcpath = helpers.getFile('misc/placeholder');
         }
         grunt.verbose.or.write('Writing ' + destpath + '...');
         try {
@@ -371,7 +371,7 @@ module.exports = function(grunt) {
               relpath = srcpath.slice(pathPrefix.length);
               o.noProcess = grunt.file.isMatch({matchBase: true}, o.noProcess, relpath);
             }
-            srcpath = file.getFile(srcpath);
+            srcpath = helpers.getFile(srcpath);
           }
           // Copy!
           init.copy(srcpath, destpath, o);
