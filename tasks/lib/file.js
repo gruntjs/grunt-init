@@ -82,7 +82,7 @@ exports.init = function(grunt) {
   exports.getTemplates = function() {
     var templates = {};
     exports.expandFiles('*/template.{js,coffee}').forEach(function(fileobj) {
-      templates[fileobj.rel.split(path.sep)[0]] = require(fileobj.abs);
+      templates[fileobj.rel.split('/')[0]] = require(fileobj.abs);
     });
     return templates;
   };
