@@ -284,16 +284,8 @@ module.exports = function(grunt) {
       // rename.json (if it exists).
       filesToCopy: function(props) {
         var files = {};
-        // Exclusion patterns.
-        var patterns = Object.keys(init.renames).filter(function(key) {
-          return !init.renames[key];
-        }).map(function(key) {
-          return '!' + pathPrefix + key;
-        });
-        // Inclusion pattern.
-        patterns.push(pathPrefix + '**');
-        // Iterate over all source files.
-        file.expandFiles({dot: true}, patterns).forEach(function(obj) {
+        // Include all template files by default.
+        file.expandFiles({dot: true}, [pathPrefix + '**']).forEach(function(obj) {
           // Get the source filepath relative to the template root.
           var src = obj.rel.slice(pathPrefix.length);
           // Get the destination filepath.
@@ -301,6 +293,21 @@ module.exports = function(grunt) {
           // Create a property for this file.
           files[dest ? grunt.template.process(dest, {data: props, delimiters: 'init'}) : src] = obj.rel;
         });
+        // Exclude files with a value of false in rename.json.
+        var exclusions = Object.keys(init.renames).filter(function(key) {
+          return init.renames[key] === false;
+        }).map(function(key) {
+          return pathPrefix + key;
+        });
+        // Exclude all exclusion files by deleting them from the files object.
+        if (exclusions.length > 0) {
+          file.expandFiles({dot: true}, exclusions).forEach(function(obj) {
+            // Get the source filepath relative to the template root.
+            var src = obj.rel.slice(pathPrefix.length);
+            // And remove that file from the files list.
+            delete files[src];
+          });
+        }
         return files;
       },
       // Search init template paths for filename.
