@@ -99,18 +99,18 @@ exports.init = function(grunt) {
   // Initialize searchDirs.
   exports.initSearchDirs = function(name) {
     exports.searchDirs = [];
+    // Add dirname of specified template file to searchDirs.
+    if (name && grunt.file.exists(name)) {
+      exports.searchDirs.push(path.dirname(name));
+      name = path.basename(path.resolve(name), '.js');
+    }
     // Add ~/.grunt-init/ to searchDirs.
     var initdir = exports.userDir();
     if (initdir) {
-      exports.searchDirs.unshift(initdir);
-    }
-    // Add dirname of specified template file to searchDirs.
-    if (name && grunt.file.exists(name)) {
-      exports.searchDirs.unshift(path.dirname(name));
-      name = path.basename(path.resolve(name), '.js');
+      exports.searchDirs.push(initdir);
     }
     // Add internal templates to searchDirs.
-    exports.searchDirs.unshift(path.resolve(__dirname, '../../templates'));
+    exports.searchDirs.push(path.resolve(__dirname, '../../templates'));
 
     // Search dirs should be unique and fully normalized absolute paths.
     exports.searchDirs = grunt.util._.uniq(exports.searchDirs).map(function(filepath) {
