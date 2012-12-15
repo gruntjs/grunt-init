@@ -21,7 +21,7 @@ var pkg = require(asset('package.json'));
 
 // Grunt.
 var grunt = require('grunt');
-var file = require(asset('tasks/lib/file')).init(grunt);
+var helpers = require(asset('tasks/lib/helpers')).init(grunt);
 
 // Hook into grunt.task.init to load the built-in init task.
 hooker.hook(grunt.task, 'init', function() {
@@ -80,9 +80,9 @@ grunt.help.initTemplates = function() {
   // Initialize task system so that the templates can be listed.
   grunt.task.init([], {help: true});
   // Initialize searchDirs so template assets can be found.
-  file.initSearchDirs(name);
+  helpers.initSearchDirs(name);
   // Valid init templates (.js or .coffee files).
-  var templatesMap = file.getTemplates();
+  var templatesMap = helpers.getTemplates();
   templates = Object.keys(templatesMap).map(function(name) {
     var description = templatesMap[name].description;
     grunt.help.initCol1(name);
@@ -95,7 +95,7 @@ grunt.help.templates = function() {
   grunt.help.table(templates);
   grunt.log.writeln().writelns(
     'Available templates that are either builtin to grunt-init or placed ' +
-    'in the ' + file.userDir() + ' directory may be run ' +
+    'in the ' + helpers.userDir() + ' directory may be run ' +
     'with "grunt-init TEMPLATE". Templates that exist in another location ' +
     'may be run with "grunt-init /path/to/TEMPLATE". A valid template ' +
     'directory must contain, at the very minimum, a template.js file.'
