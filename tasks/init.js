@@ -29,7 +29,7 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
+  grunt.registerInitTask('init', 'Generate project scaffolding from a template.', function() {
     // Extra arguments will be applied to the template file.
     var args = grunt.util.toArray(arguments);
     // Initialize searchDirs so template assets can be found.
