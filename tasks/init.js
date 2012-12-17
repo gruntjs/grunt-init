@@ -48,8 +48,12 @@ module.exports = function(grunt) {
       grunt.help.initTemplates();
       grunt.help.initWidths();
       grunt.help.templates();
-      grunt.log.writeln();
-      grunt.fatal('A valid init template name must be specified.');
+      if (name) {
+        grunt.log.writeln();
+        grunt.fatal('A valid init template name must be specified.');
+      } else {
+        process.exit();
+      }
     }
 
     // Give the user a little help.
