@@ -44,12 +44,11 @@ module.exports = function(grunt) {
       if (name) {
         grunt.log.write('Loading "' + name + '" init template...').error();
       }
-      grunt.log.writelns(
-        '\n' +
-        'A valid init template name must be specified. For a list of available ' +
-        'init templates and options, run ' + path.basename(process.argv[1]) + ' --help.' +
-        '\n'
-      );
+      grunt.log.writeln('\nA valid init template name must be specified.');
+      grunt.help.initTemplates();
+      grunt.help.initWidths();
+      grunt.help.templates();
+      grunt.log.writeln();
       grunt.fatal('A valid init template name must be specified.');
     }
 
