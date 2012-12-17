@@ -13,7 +13,7 @@ var prompt = require('prompt');
 prompt.message = '[' + '?'.green + ']';
 prompt.delimiter = ' ';
 
-exports.init = function(grunt, file) {
+exports.init = function(grunt, helpers) {
   var exports = {};
 
   // Expose prompts object so that prompts can be added or modified.
@@ -141,7 +141,7 @@ exports.init = function(grunt, file) {
     var option = grunt.util._.clone(exports.prompts[name]);
     option.name = name;
 
-    var defaults = file.readDefaults('defaults.json');
+    var defaults = helpers.readDefaults('defaults.json');
     if (name in defaults) {
       // A user default was specified for this option, so use its value.
       option.default = defaults[name];
