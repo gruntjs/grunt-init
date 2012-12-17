@@ -125,7 +125,139 @@ exports.template = function(grunt, init, done) {
 ```
 
 ## Inside an init template
-_(Documentation coming soon)_
+Until these methods and properties are documented, see the `grunt-init` source for more information:
+
+* <https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js>
+* <https://github.com/gruntjs/grunt-init/blob/master/tasks/lib/helpers.js>
+
+### init.addLicenseFiles
+TODO: explain
+
+### init.availableLicenses
+TODO: explain
+
+### init.copy
+TODO: explain
+
+### init.copyAndProcess
+TODO: explain
+
+### init.defaults
+TODO: explain
+
+### init.destpath
+TODO: explain
+
+### init.expand
+TODO: explain
+
+### init.expandDirs
+TODO: explain
+
+### init.expandFiles
+TODO: explain
+
+### init.filesToCopy
+TODO: explain
+
+### init.getFile
+TODO: explain
+
+### init.getTemplates
+TODO: explain
+
+### init.initSearchDirs
+TODO: explain
+
+### init.process
+TODO: explain
+
+### init.prompt
+TODO: explain
+
+### init.prompts
+TODO: explain
+
+### init.readDefaults
+TODO: explain
+
+### init.renames
+TODO: explain
+
+### init.searchDirs
+TODO: explain
+
+### init.searchDirs
+TODO: explain
+
+### init.searchDirs
+TODO: explain
+
+### init.srcpath
+TODO: explain
+
+### init.userDir
+TODO: explain
+
+### init.writePackageJSON
+TODO: explain
+
 
 ## Built-in prompts
-_(Documentation coming soon)_
+
+Until these prompts are documented, see the `grunt-init` source for more information:
+
+* <https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js>
+* <https://github.com/gruntjs/grunt-init/blob/master/tasks/lib/prompt.js>
+
+### author_email
+TODO: explain
+
+### author_name
+TODO: explain
+
+### author_url
+TODO: explain
+
+### bin
+TODO: explain
+
+### bugs
+TODO: explain
+
+### description
+TODO: explain
+
+### grunt_version
+TODO: explain
+
+### homepage
+TODO: explain
+
+### jquery_version
+TODO: explain
+
+### licenses
+TODO: explain
+
+### main
+TODO: explain
+
+### name
+TODO: explain
+
+### node_version
+TODO: explain
+
+### npm_test
+TODO: explain
+
+### repository
+TODO: explain
+
+### title
+TODO: explain
+
+### version
+TODO: explain
+
