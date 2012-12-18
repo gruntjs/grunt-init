@@ -11,6 +11,10 @@ module.exports = function(grunt) {
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+    microbanner: '/*! <%= pkg.title || pkg.name %> v<%= pkg.version %> ' +
+      '<%= pkg.homepage ? pkg.homepage + " " : "" %>| ' +
+      '(c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> | ' +
+      'Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
     concat: {
       options: {
@@ -24,7 +28,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '<%= banner %>'
+        banner: '<%= microbanner %>'
       },
       dist: {
         src: '<%= concat.dist.dest %>',
