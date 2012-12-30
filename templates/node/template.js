@@ -38,6 +38,11 @@ exports.template = function(grunt, init, done) {
     init.prompt('npm_test', 'grunt nodeunit')
   ], function(err, props) {
     props.keywords = [];
+    props.devDependencies = {
+      'grunt-contrib-jshint': '~0.1.1rc5',
+      'grunt-contrib-nodeunit': '~0.1.2rc5',
+      'grunt-contrib-watch': '~0.2.0rc5',
+    };
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);
