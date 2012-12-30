@@ -72,6 +72,7 @@ exports.template = function(grunt, init, done) {
         'grunt-contrib-qunit': '~0.1.0',
         'grunt-contrib-concat': '~0.1.0',
         'grunt-contrib-uglify': '~0.1.0',
+        'grunt-contrib-watch': '~0.2.0',
       },
     });
 
