@@ -125,139 +125,246 @@ exports.template = function(grunt, init, done) {
 ```
 
 ## Inside an init template
-Until these methods and properties are documented, see the `grunt-init` source for more information:
-
-* <https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js>
-* <https://github.com/gruntjs/grunt-init/blob/master/tasks/lib/helpers.js>
 
 ### init.addLicenseFiles
-TODO: explain
+Add properly-named license files to the files object.
+
+```js
+var files = {};
+var licenses = ['MIT'];
+init.addLicenseFiles(files, licenses);
+// files === {'LICENSE-MIT': 'licenses/LICENSE-MIT'}
+```
 
 ### init.availableLicenses
-TODO: explain
+Return an array of available licenses.
+
+```js
+var licenses = init.availableLicenses();
+// licenses === [ 'Apache-2.0', 'GPL-2.0', 'MIT', 'MPL-2.0' ]
+```
 
 ### init.copy
-TODO: explain
+Given an absolute or relative source path, and an optional relative
+destination path, copy a file, optionally processing it through the
+passed callback.
+
+```js
+init.copy(srcpath[, destpath], options)
+```
 
 ### init.copyAndProcess
-TODO: explain
+Iterate over all files in the passed object, copying the source file to
+the destination, processing the contents.
+
+```js
+init.copyAndProcess(files, props[, options])
+```
 
 ### init.defaults
-TODO: explain
+User-specified default init values from `defaults.json`.
+
+```js
+init.defaults
+```
 
 ### init.destpath
-TODO: explain
+Absolute destination file path.
+
+```js
+init.destpath()
+```
 
 ### init.expand
-TODO: explain
+Same as [grunt.file.expand](https://github.com/gruntjs/grunt/wiki/grunt.file#wiki-grunt-file-expand).
+
+Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts either comma separated wildcard patterns or an array of wildcard patterns. Paths matching patterns that begin with ! will be excluded from the returned array. Patterns are processed in order, so inclusion and exclusion order is significant.
+
+```js
+init.expand([options, ] patterns)
+```
 
 ### init.expandDirs
-TODO: explain
+Same as [grunt.file.expandDirs](https://github.com/gruntjs/grunt/wiki/grunt.file#wiki-grunt-file-expandDirs).
+
+This method behaves the same as init.expand except it only returns directory paths.
+
+```js
+init.expandDirs([options, ] patterns)
+```
 
 ### init.expandFiles
-TODO: explain
+Same as [grunt.file.expandFiles](https://github.com/gruntjs/grunt/wiki/grunt.file#wiki-grunt-file-expandFiles).
+
+This method behaves the same as init.expand except it only returns file paths.
+
+```js
+init.expandFiles([options, ] patterns)
+```
 
 ### init.filesToCopy
-TODO: explain
+Return an object containing files to copy with their absolute source path and relative destination path, renamed (or omitted) according to rules in rename.json (if it exists).
+
+```js
+var files = init.filesToCopy(props);
+/* files === { '.gitignore': 'template/root/.gitignore',
+  '.jshintrc': 'template/root/.jshintrc',
+  'Gruntfile.js': 'template/root/Gruntfile.js',
+  'README.md': 'template/root/README.md',
+  'test/test_test.js': 'template/root/test/name_test.js' } */
+```
 
 ### init.getFile
-TODO: explain
+Get a single task file path.
+
+```js
+init.getFile(filepath[, ...])
+```
 
 ### init.getTemplates
-TODO: explain
+Returns an object of all the available templates.
+
+```js
+init.getTemplates()
+```
 
 ### init.initSearchDirs
-TODO: explain
+Initialize the directories to search for init templates. `template` is the
+location of a template. Will also include `~/.grunt-init/` and the core init
+tasks within grunt-init.
+
+```js
+init.initSearchDirs([filename])
+```
 
 ### init.process
-TODO: explain
+Start up the process to begin prompting for input.
+
+```js
+init.process(options, prompts, done)
+```
+
+```js
+init.process({}, [
+  // Prompt for these values
+  init.prompt('name'),
+  init.prompt('description'),
+  init.prompt('version')
+], function(err, props) {
+  // All finished, do something with the properties
+});
+```
 
 ### init.prompt
-TODO: explain
+Prompt a user for a value.
+
+```js
+init.prompt(name[, default])
+```
 
 ### init.prompts
-TODO: explain
+An object of all the prompts.
+
+```js
+var prompts = init.prompts;
+```
 
 ### init.readDefaults
-TODO: explain
+Read JSON defaults from task files (if they exist), merging them into one data object.
+
+```js
+init.readDefaults(filepath[, ...])
+```
 
 ### init.renames
-TODO: explain
+The rename rules for the template.
+
+```js
+var renames = init.renames;
+// renames === { 'test/name_test.js': 'test/{%= name %}_test.js' }
+```
 
 ### init.searchDirs
-TODO: explain
+An array of directories to search for templates in.
 
-### init.searchDirs
-TODO: explain
-
-### init.searchDirs
-TODO: explain
+```js
+var dirs = init.searchDirs;
+/* dirs === [ '/Users/shama/.grunt-init',
+  '/usr/local/lib/node_modules/grunt-init/templates' ] */
+```
 
 ### init.srcpath
-TODO: explain
+Search init template paths for filename and return an absolute path.
+
+```js
+init.srcpath(filepath[, ...])
+```
 
 ### init.userDir
-TODO: explain
+Returns the absolute path to the user's template directory.
+
+```js
+var dir = init.userDir();
+// dir === '/Users/shama/.grunt-init'
+```
 
 ### init.writePackageJSON
-TODO: explain
+Save a package.json file in the destination directory. The callback can be used to post-process properties to add/remove/whatever.
 
+```js
+init.writePackageJSON(filename, props[, callback])
+```
 
 ## Built-in prompts
 
-Until these prompts are documented, see the `grunt-init` source for more information:
-
-* <https://github.com/gruntjs/grunt-init/blob/master/tasks/init.js>
-* <https://github.com/gruntjs/grunt-init/blob/master/tasks/lib/prompt.js>
-
 ### author_email
-TODO: explain
+Author's email address to use in the `package.json`. Will attempt to find a default value from the user's git config.
 
 ### author_name
-TODO: explain
+Author's full name to use in the `package.json` and copyright notices. Will attempt to find a default value from the user's git config.
 
 ### author_url
-TODO: explain
+A public URL to the author's website to use in the `package.json`.
 
 ### bin
-TODO: explain
+A relative path from the project root for a cli script.
 
 ### bugs
-TODO: explain
+A public URL to the project's issues tracker. Will default to the github issue tracker if the project has a github repository.
 
 ### description
-TODO: explain
+A description of the project. Used in the `package.json` and README files.
 
 ### grunt_version
-TODO: explain
+A valid semantic version range descriptor of Grunt the project requires.
 
 ### homepage
-TODO: explain
+A public URL to the project's home page. Will default to the github url if a github repository.
 
 ### jquery_version
-TODO: explain
+If a jQuery project, the version of jQuery the project requires. Must be a valid semantic version range descriptor.
 
 ### licenses
-TODO: explain
+The license(s) for the project. Multiple licenses are separated by spaces. The licenses built-in are: `MIT`, `MPL-2.0`, `GPL-2.0`, and `Apache-2.0`. Defaults to `MIT`. Add custom licenses with [init.addLicenseFiles](#initaddlicensefiles).
 
 ### main
-TODO: explain
+The primary entry point of the project. Defaults to the project name within the `lib` folder.
 
 ### name
-TODO: explain
+The name of the project. Will be used heavily throughout the project template. Defaults to the current working directory.
 
 ### node_version
-TODO: explain
+The version of Node.js the project requires. Must be a valid semantic version range descriptor.
 
 ### npm_test
-TODO: explain
+The command to run tests on your project. Defaults to `grunt`.
 
 ### repository
-TODO: explain
+Project's git repository. Defaults to a guess of a github url.
 
 ### title
-TODO: explain
+A human readable project name. Defaults to the actual project name altered to be more human readable.
 
 ### version
-TODO: explain
+The version of the project. Defaults to the first valid semantic version, `0.1.0`.
 
