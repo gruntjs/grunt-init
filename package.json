@@ -1,7 +1,7 @@
 {
   "name": "grunt-init",
   "description": "Generate project scaffolding from a template.",
-  "version": "0.2.0rc3",
+  "version": "0.2.0rc4",
   "homepage": "https://github.com/gruntjs/grunt-init",
   "author": {
     "name": "Grunt Team",
