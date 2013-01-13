@@ -288,7 +288,7 @@ module.exports = function(grunt) {
       filesToCopy: function(props) {
         var files = {};
         // Include all template files by default.
-        helpers.expandFiles({dot: true}, [pathPrefix + '**']).forEach(function(obj) {
+        helpers.expand({filter: 'isFile', dot: true}, [pathPrefix + '**']).forEach(function(obj) {
           // Get the source filepath relative to the template root.
           var src = obj.rel.slice(pathPrefix.length);
           // Get the destination filepath.
@@ -304,7 +304,7 @@ module.exports = function(grunt) {
         });
         // Exclude all exclusion files by deleting them from the files object.
         if (exclusions.length > 0) {
-          helpers.expandFiles({dot: true}, exclusions).forEach(function(obj) {
+          helpers.expand({filter: 'isFile', dot: true}, exclusions).forEach(function(obj) {
             // Get the source filepath relative to the template root.
             var src = obj.rel.slice(pathPrefix.length);
             // And remove that file from the files list.
@@ -325,7 +325,7 @@ module.exports = function(grunt) {
       // files object.
       addLicenseFiles: function(files, licenses) {
         licenses.forEach(function(license) {
-          var fileobj = helpers.expandFiles('licenses/LICENSE-' + license)[0];
+          var fileobj = helpers.expand({filter: 'isFile'}, 'licenses/LICENSE-' + license)[0];
           files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
         });
       },

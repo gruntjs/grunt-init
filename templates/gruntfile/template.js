@@ -61,12 +61,12 @@ exports.template = function(grunt, init, done) {
     }
 
     // Guess at some directories, if they exist.
-    var dirs = grunt.file.expandDirs('*').map(function(d) { return d.slice(0, -1); });
+    var dirs = grunt.file.expand({filter: 'isDirectory'}, '*').map(function(d) { return d.slice(0, -1); });
     props.lib_dir = prefer(dirs, ['lib', 'src']);
     props.test_dir = prefer(dirs, ['test', 'tests', 'unit', 'spec']);
 
     // Maybe this should be extended to support more libraries. Patches welcome!
-    props.jquery = grunt.file.expandFiles('**/jquery*.js').length > 0;
+    props.jquery = grunt.file.expand({filter: 'isFile'}, '**/jquery*.js').length > 0;
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);

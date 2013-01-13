@@ -27,7 +27,7 @@ exports.init = function(grunt) {
 
   // An array of all available license files.
   exports.availableLicenses = function() {
-    return exports.expandFiles('licenses/*').map(function(obj) {
+    return exports.expand({filter: 'isFile'}, 'licenses/*').map(function(obj) {
       return path.basename(String(obj)).replace(/^LICENSE-/, '');
     });
   };
@@ -36,8 +36,8 @@ exports.init = function(grunt) {
   // wildcard patterns. Instead of returing a string for each file path, return
   // an object with useful properties. When coerced to String, each object will
   // yield its absolute path.
-  function expandByMethod(method) {
-    var args = grunt.util.toArray(arguments).slice(1);
+  exports.expand = function() {
+    var args = grunt.util.toArray(arguments);
     // If the first argument is an options object, remove and save it for later.
     var options = grunt.util.kindOf(args[0]) === 'object' ? args.shift() : {};
     // Use the first argument if it's an Array, otherwise convert the arguments
@@ -55,7 +55,7 @@ exports.init = function(grunt) {
       // Create an array of absolute patterns, preceded by the options object.
       var args = [opts].concat(patterns);
       // Expand the paths in case a wildcard was passed.
-      grunt.file[method].apply(null, args).forEach(function(relpath) {
+      grunt.file.expand.apply(null, args).forEach(function(relpath) {
         if (relpath in filepaths) { return; }
         // Update object at this relpath only if it doesn't already exist.
         filepaths[relpath] = {
@@ -70,18 +70,12 @@ exports.init = function(grunt) {
     return Object.keys(filepaths).map(function(relpath) {
       return filepaths[relpath];
     });
-  }
-
-  // A few type-specific task expansion methods. These methods all return arrays
-  // of file objects.
-  exports.expand = expandByMethod.bind(null, 'expand');
-  exports.expandDirs = expandByMethod.bind(null, 'expandDirs');
-  exports.expandFiles = expandByMethod.bind(null, 'expandFiles');
+  };
 
   // Get all templates.
   exports.getTemplates = function() {
     var templates = {};
-    exports.expandFiles('*/template.{js,coffee}').forEach(function(fileobj) {
+    exports.expand({filter: 'isFile'}, '*/template.{js,coffee}').forEach(function(fileobj) {
       templates[fileobj.rel.split('/')[0]] = require(fileobj.abs);
     });
     return templates;

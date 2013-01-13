@@ -184,24 +184,6 @@ Return a unique array of all file or directory paths that match the given wildca
 init.expand([options, ] patterns)
 ```
 
-### init.expandDirs
-Same as [grunt.file.expandDirs](https://github.com/gruntjs/grunt/wiki/grunt.file#wiki-grunt-file-expandDirs).
-
-This method behaves the same as init.expand except it only returns directory paths.
-
-```js
-init.expandDirs([options, ] patterns)
-```
-
-### init.expandFiles
-Same as [grunt.file.expandFiles](https://github.com/gruntjs/grunt/wiki/grunt.file#wiki-grunt-file-expandFiles).
-
-This method behaves the same as init.expand except it only returns file paths.
-
-```js
-init.expandFiles([options, ] patterns)
-```
-
 ### init.filesToCopy
 Return an object containing files to copy with their absolute source path and relative destination path, renamed (or omitted) according to rules in rename.json (if it exists).
 
