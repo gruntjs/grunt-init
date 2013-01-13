@@ -66,12 +66,13 @@ exports.template = function(grunt, init, done) {
       version: '0.0.0-ignored',
       npm_test: 'grunt qunit',
       // TODO: pull from grunt's package.json
-      node_version: '>= 0.6.0',
+      node_version: '>= 0.8.0',
       devDependencies: {
-        'grunt-contrib-jshint': '~0.1.0',
-        'grunt-contrib-qunit': '~0.1.0',
-        'grunt-contrib-concat': '~0.1.0',
-        'grunt-contrib-uglify': '~0.1.0',
+        'grunt-contrib-jshint': '~0.1.1rc5',
+        'grunt-contrib-qunit': '~0.1.1rc5',
+        'grunt-contrib-concat': '~0.1.2rc5',
+        'grunt-contrib-uglify': '~0.1.1rc5',
+        'grunt-contrib-watch': '~0.2.0rc5',
       },
     });
 
