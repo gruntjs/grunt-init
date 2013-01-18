@@ -56,9 +56,12 @@ exports.template = function(grunt, init, done) {
     props.npm_test = 'grunt test';
     props.keywords = ['gruntplugin'];
     props.devDependencies = {
-      'grunt-contrib-jshint': '~0.1.1rc5',
-      'grunt-contrib-clean': '~0.4.0rc5',
-      'grunt-contrib-nodeunit': '~0.1.2rc5',
+      // TODO: ADJUST VERSIONS FOR 0.4.0 FINAL
+      'grunt-contrib-jshint': '0.1.1rc6',
+      'grunt-contrib-clean': '0.4.0rc6',
+      'grunt-contrib-nodeunit': '0.1.2rc6',
+      // TODO: REMOVE FOR 0.4.0 FINAL
+      'grunt': '0.4.0rc6',
     };
 
     // Files to copy (and process).

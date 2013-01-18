@@ -38,11 +38,14 @@ exports.template = function(grunt, init, done) {
   ], function(err, props) {
     props.keywords = [];
     props.devDependencies = {
-      'grunt-contrib-concat': '~0.1.2rc5',
-      'grunt-contrib-uglify': '~0.1.1rc5',
-      'grunt-contrib-jshint': '~0.1.1rc5',
-      'grunt-contrib-nodeunit': '~0.1.2rc5',
-      'grunt-contrib-watch': '~0.2.0rc5',
+      // TODO: ADJUST VERSIONS FOR 0.4.0 FINAL
+      'grunt-contrib-concat': '0.1.2rc6',
+      'grunt-contrib-uglify': '0.1.1rc6',
+      'grunt-contrib-jshint': '0.1.1rc6',
+      'grunt-contrib-nodeunit': '0.1.2rc6',
+      'grunt-contrib-watch': '0.2.0rc5',
+      // TODO: REMOVE FOR 0.4.0 FINAL
+      'grunt': '0.4.0rc6',
     };
 
     // Files to copy (and process).

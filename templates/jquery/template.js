@@ -68,11 +68,14 @@ exports.template = function(grunt, init, done) {
       // TODO: pull from grunt's package.json
       node_version: '>= 0.8.0',
       devDependencies: {
-        'grunt-contrib-jshint': '~0.1.1rc5',
-        'grunt-contrib-qunit': '~0.1.1rc5',
-        'grunt-contrib-concat': '~0.1.2rc5',
-        'grunt-contrib-uglify': '~0.1.1rc5',
-        'grunt-contrib-watch': '~0.2.0rc5',
+        // TODO: ADJUST VERSIONS FOR 0.4.0 FINAL
+        'grunt-contrib-jshint': '0.1.1rc6',
+        'grunt-contrib-qunit': '0.1.1rc6',
+        'grunt-contrib-concat': '0.1.2rc6',
+        'grunt-contrib-uglify': '0.1.1rc6',
+        'grunt-contrib-watch': '0.2.0rc5',
+        // TODO: REMOVE FOR 0.4.0 FINAL
+        'grunt': '0.4.0rc6',
       },
     });
 
