@@ -417,7 +417,9 @@ module.exports = function(grunt) {
           pkg.scripts = {test: props.npm_test};
           if (props.npm_test.split(' ')[0] === 'grunt') {
             if (!props.devDependencies) { props.devDependencies = {}; }
-            props.devDependencies.grunt = '~' + grunt.version;
+            if (!props.devDependencies.grunt) {
+              props.devDependencies.grunt = '~' + grunt.version;
+            }
           }
         }
 
