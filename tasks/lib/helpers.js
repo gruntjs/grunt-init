@@ -21,8 +21,7 @@ exports.init = function(grunt) {
   exports.userDir = function() {
     var dirpath = path.join.apply(path, arguments);
     var homepath = process.env[win32 ? 'USERPROFILE' : 'HOME'];
-    dirpath = path.resolve(homepath, '.grunt-init', dirpath);
-    return grunt.file.exists(dirpath) ? dirpath : null;
+    return path.resolve(homepath, '.grunt-init', dirpath);
   };
 
   // An array of all available license files.
@@ -100,7 +99,7 @@ exports.init = function(grunt) {
     }
     // Add ~/.grunt-init/ to searchDirs.
     var initdir = exports.userDir();
-    if (initdir) {
+    if (initdir && grunt.file.exists(initdir)) {
       exports.searchDirs.push(initdir);
     }
     // Add internal templates to searchDirs.
