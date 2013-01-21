@@ -91,14 +91,22 @@ grunt.help.initTemplates = function() {
 
 grunt.help.templates = function() {
   grunt.log.header('Available templates');
-  grunt.help.table(templates);
+  if (templates.length > 0) {
+    grunt.help.table(templates);
+  } else {
+    grunt.log.writeln().writeln('(No templates found)');
+  }
   grunt.log.writeln().writelns(
-    'Available templates that are either builtin to grunt-init or placed ' +
-    'in the ' + helpers.userDir() + ' directory may be run ' +
-    'with "grunt-init TEMPLATE". Templates that exist in another location ' +
-    'may be run with "grunt-init /path/to/TEMPLATE". A valid template ' +
-    'directory must contain, at the very minimum, a template.js file.'
+    'Templates that exist in the ' + helpers.userDir() + ' ' +
+    'directory may be run with "grunt-init TEMPLATE". Templates that exist ' +
+    'in another location may be run with "grunt-init /path/to/TEMPLATE". A ' +
+    'template is a directory that must contain, at the very minimum, a ' +
+    'template.js file.'
   );
+};
+
+grunt.help.footer = function() {
+  grunt.log.writeln().writeln('For more information, see http://gruntjs.com/project-scaffolding');
 };
 
 // Display version number if asked.

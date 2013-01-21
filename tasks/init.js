@@ -48,6 +48,7 @@ module.exports = function(grunt) {
       grunt.help.initTemplates();
       grunt.help.initWidths();
       grunt.help.templates();
+      grunt.help.footer();
       if (name) {
         grunt.log.writeln();
         grunt.fatal('A valid init template name must be specified.');
