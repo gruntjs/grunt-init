@@ -458,7 +458,11 @@ module.exports = function(grunt) {
       // Fail task if errors were logged.
       if (grunt.task.current.errorCount) { taskDone(false); }
       // Otherwise, print a success message.
-      grunt.log.writeln().writeln('Initialized from template "' + name + '".');
+      grunt.log.subhead('Initialized from template "' + name + '".');
+      // Show any template-specific notes.
+      if (initTemplate.after) {
+        grunt.log.writelns(initTemplate.after);
+      }
       // All done!
       taskDone();
     }].concat(args));
