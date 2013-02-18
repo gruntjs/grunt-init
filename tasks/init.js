@@ -426,6 +426,7 @@ module.exports = function(grunt) {
 
         if (props.dependencies) { pkg.dependencies = props.dependencies; }
         if (props.devDependencies) { pkg.devDependencies = props.devDependencies; }
+        if (props.peerDependencies) { pkg.peerDependencies = props.peerDependencies; }
         if (props.keywords) { pkg.keywords = props.keywords; }
 
         // Allow final tweaks to the pkg object.
