@@ -413,7 +413,7 @@ module.exports = function(grunt) {
         // Node/npm-specific (?)
         if (props.main) { pkg.main = props.main; }
         if (props.bin) { pkg.bin = props.bin; }
-        if (props.package) { pkg.package = props.package; }
+        if (props.engines) { pkg.engines = props.engines; }
         else if (props.node_version) { pkg.engines = {node: props.node_version}; }
         if (props.npm_test) {
           pkg.scripts = {test: props.npm_test};
