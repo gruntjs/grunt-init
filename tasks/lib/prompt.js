@@ -138,7 +138,7 @@ exports.init = function(grunt, helpers) {
   // Commonly-used prompt options with meaningful default values.
   exports.prompt = function(name, altDefault) {
     // Clone the option so the original options object doesn't get modified.
-    var option = grunt.util._.clone(exports.prompts[name]);
+    var option = grunt.util._.clone(exports.prompts[name] || {});
     option.name = name;
 
     var defaults = helpers.readDefaults('defaults.json');
