@@ -42,5 +42,19 @@ exports.init = function(grunt) {
     return url;
   };
 
+  // Get the given key from the git config, if it exists.
+  exports.config = function(key, done) {
+    grunt.util.spawn({
+      cmd: 'git',
+      args: ['config', '--get', key]
+    }, function(err, result) {
+      if (err) {
+        done(true, 'none');
+        return;
+      }
+      done(null, String(result));
+    });
+  };
+
   return exports;
 };
