@@ -143,13 +143,22 @@ module.exports = function(grunt) {
           // Change any git@...:... uri to git://.../... format.
           git.origin(function(err, result) {
             if (err) {
-              // Attempt to guess at the repo name. Maybe we'll get lucky!
-              result = 'git://github.com/' + (process.env.USER || process.env.USERNAME || '???') + '/' +
-                path.basename(process.cwd()) + '.git';
+              // Attempt to pull the data from the user's git config.
+              git.config('github.user', function (err, user) {
+                if (err) {
+                  // Attempt to guess at the repo user name. Maybe we'll get lucky!
+                  user = process.env.USER || process.env.USERNAME || '???';
+                }
+                // Save as git_user for sanitize step.
+                data.git_user = user;
+                result = 'git://github.com/' + user + '/' +
+                  path.basename(process.cwd()) + '.git';
+                done(null, result);
+              });
             } else {
               result = result.replace(/^git@([^:]+):/, 'git://$1/');
+              done(null, result);
             }
-            done(null, result);
           });
         },
         sanitize: function(value, data, done) {
@@ -158,20 +167,13 @@ module.exports = function(grunt) {
           var parts;
           if (repo != null) {
             parts = repo.split('/');
-            data.git_user = parts[parts.length - 2];
+            data.git_user = data.git_user || parts[parts.length - 2];
             data.git_repo = parts[parts.length - 1];
             done();
           } else {
-            // Attempt to pull the data from the user's git config.
-            grunt.util.spawn({
-              cmd: 'git',
-              args: ['config', '--get', 'github.user'],
-              fallback: ''
-            }, function(err, result) {
-              data.git_user = String(result) || process.env.USER || process.env.USERNAME || '???';
-              data.git_repo = path.basename(process.cwd());
-              done();
-            });
+            data.git_user = data.git_user || '';
+            data.git_repo = path.basename(process.cwd());
+            done();
           }
         },
         warning: 'Should be a public git:// URI.'
