@@ -296,12 +296,18 @@ module.exports = function(grunt) {
           var src = obj.rel.slice(pathPrefix.length);
           // Get the destination filepath.
           var dest = init.renames[src];
-          // Create a property for this file.
-          files[dest ? grunt.template.process(dest, {data: props, delimiters: 'init'}) : src] = obj.rel;
+          // Create a property for this file, but use src if dest evaulates
+          // to false
+          var processed = (dest) ? grunt.template.process(dest, {data: props, delimiters: 'init'}) : false;
+          processed = (processed === 'false' || processed === '') ? false : processed;
+          files[(processed) ? processed : src] = obj.rel;
         });
         // Exclude files with a value of false in rename.json.
         var exclusions = Object.keys(init.renames).filter(function(key) {
-          return init.renames[key] === false;
+          var processed = (init.renames[key]) ? 
+            grunt.template.process(init.renames[key], {data: props, delimiters: 'init'}) : false;
+          processed = (processed === 'false' || processed === '') ? false : processed;
+          return (processed === false);
         }).map(function(key) {
           return pathPrefix + key;
         });
