@@ -414,8 +414,16 @@ module.exports = function(grunt) {
         if (props.main) { pkg.main = props.main; }
         if (props.bin) { pkg.bin = props.bin; }
         if (props.node_version) { pkg.engines = {node: props.node_version}; }
+
+        if (props.scripts) {
+          pkg.scripts = props.scripts;
+        } else {
+          pkg.scripts = {};
+        }
+
+        // leave in for legacy support
         if (props.npm_test) {
-          pkg.scripts = {test: props.npm_test};
+          pkg.scripts.test = props.npm_test;
           if (props.npm_test.split(' ')[0] === 'grunt') {
             if (!props.devDependencies) { props.devDependencies = {}; }
             if (!props.devDependencies.grunt) {
