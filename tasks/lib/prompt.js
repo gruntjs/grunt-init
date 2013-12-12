@@ -18,7 +18,7 @@ exports.init = function(grunt, helpers) {
 
   // Expose prompts object so that prompts can be added or modified.
   exports.prompts = {};
-  var force_yes = grunt.option('yes') ? true : false;
+  var useDefaults = grunt.option('default');
 
   // Prompt user to override default values passed in obj.
   exports.process = function(defaults, options, done) {
@@ -49,7 +49,7 @@ exports.init = function(grunt, helpers) {
     // Ask user for input. This is in an IIFE because it has to execute at least
     // once, and might be repeated.
     (function ask() {
-      if(force_yes) {
+      if (useDefaults) {
         grunt.log.subhead('Using defaults...');
       } else {
         grunt.log.subhead('Please answer the following:');
@@ -92,7 +92,7 @@ exports.init = function(grunt, helpers) {
             next(true);
           };
           // Actually get user input.
-          if(force_yes) {
+          if (useDefaults) {
             result[option.name] = option.default;
             done();
           } else {
