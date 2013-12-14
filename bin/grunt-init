@@ -20,7 +20,18 @@ var pkg = require(asset('package.json'));
 
 // Grunt.
 var grunt = require('grunt');
+var git = require(asset('tasks/lib/git')).init(grunt);
 var helpers = require(asset('tasks/lib/helpers')).init(grunt);
+
+git.config('core.autocrlf', function (err, autocrlf) {
+  if (err) {
+    autocrlf = 'false';
+  }
+
+  if (autocrlf === 'false') {
+    grunt.util.linefeed = '\n';
+  }
+});
 
 // Hook into grunt.task.init to load the built-in init task.
 hooker.hook(grunt.task, 'init', function() {
