@@ -121,6 +121,15 @@ module.exports = function(grunt) {
         default: 'The best project ever.',
         warning: 'May consist of any characters.'
       },
+      keywords: {
+        message: 'Project keywords (separated by space)',
+        sanitize: function(value, data, done) { 
+          done(null, value 
+                        ? value.replace(/^\s+|\s+$/g, '')
+                               .split(/\s+/)
+                        : []); 
+        }
+      },
       version: {
         message: 'Version',
         default: function(value, data, done) {
@@ -147,7 +156,7 @@ module.exports = function(grunt) {
               git.config('github.user', function (err, user) {
                 if (err) {
                   // Attempt to guess at the repo user name. Maybe we'll get lucky!
-                  user = process.env.USER || process.env.USERNAME || '???';
+                  user = init.defaults.github_user || process.env.USER || process.env.USERNAME || '???';
                 }
                 // Save as git_user for sanitize step.
                 data.git_user = user;
@@ -267,6 +276,11 @@ module.exports = function(grunt) {
         message: 'What versions of grunt does it require?',
         default: '~' + grunt.version,
         warning: 'Must be a valid semantic version range descriptor.'
+      },
+      npm_install: {
+          message: 'Would you like to run `npm install` command automatically after initialization of the project?',
+          default: 'Y/n',
+          sanitize: prompt.sanitizeYesNo
       }
     });
 
@@ -281,6 +295,7 @@ module.exports = function(grunt) {
       process: prompt.process,
       prompt: prompt.prompt,
       prompts: prompt.prompts,
+      sanitizeYesNo: prompt.sanitizeYesNo,
       // Expose any user-specified default init values.
       defaults: helpers.readDefaults('defaults.json'),
       // Expose rename rules for this template.
@@ -451,6 +466,23 @@ module.exports = function(grunt) {
         } catch(e) {
           grunt.verbose.or.error().error(e);
           throw e;
+        }
+      },
+      // Run npm install in project's directory and then call done if it is specified.
+      // The second parameter allows to skip npm install if parameter's value is falsy.
+      runNpmInstall: function(done, required) {
+        if (arguments.length < 2 || required) {
+          grunt.log.writeln('\nnpm install...');
+          // Run npm install in project's directory
+          grunt.util.spawn({cmd: 'npm', args: ['install'],
+                            opts: {cwd: init.destpath, stdio: 'inherit'}},
+              function(error, result, code) {
+                if (done) {
+                  done();
+                }
+              });
+        } else if (done) {
+          done();
         }
       }
     });
