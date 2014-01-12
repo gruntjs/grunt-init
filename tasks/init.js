@@ -161,7 +161,7 @@ module.exports = function(grunt) {
                 // Save as git_user for sanitize step.
                 data.git_user = user;
                 result = 'git://github.com/' + user + '/' +
-                  path.basename(process.cwd()) + '.git';
+                  (data.name || path.basename(process.cwd())) + '.git';
                 done(null, result);
               });
             } else {
