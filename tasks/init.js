@@ -241,7 +241,7 @@ module.exports = function(grunt) {
       node_version: {
         message: 'What versions of node does it run on?',
         // TODO: pull from grunt's package.json
-        default: '>= 0.6.0',
+        default: '>= 0.10.0',
         warning: 'Must be a valid semantic version range descriptor.'
       },
       main: {
