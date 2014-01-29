@@ -9,6 +9,8 @@
 'use strict';
 
 // External lib.
+var _ = require('lodash');
+var async = require('async');
 var prompt = require('prompt');
 prompt.message = '[' + '?'.green + ']';
 prompt.delimiter = ' ';
@@ -54,11 +56,11 @@ exports.init = function(grunt, helpers) {
       } else {
         grunt.log.subhead('Please answer the following:');
       }
-      var result = grunt.util._.clone(defaults);
+      var result = _.clone(defaults);
       // Loop over each prompt option.
-      grunt.util.async.forEachSeries(options, function(option, done) {
+      async.forEachSeries(options, function(option, done) {
         var defaultValue;
-        grunt.util.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
+        async.forEachSeries(['default', 'altDefault'], function(prop, next) {
           if (typeof option[prop] === 'function') {
             // If the value is a function, execute that function, using the
             // value passed into the return callback as the new default value.
@@ -113,7 +115,7 @@ exports.init = function(grunt, helpers) {
           // Clean up.
           delete result.ANSWERS_VALID;
           // Iterate over all results.
-          grunt.util.async.forEachSeries(Object.keys(result), function(name, next) {
+          async.forEachSeries(Object.keys(result), function(name, next) {
             // If this value needs to be sanitized, process it now.
             if (sanitize[name]) {
               sanitize[name](result[name], result, function(err, value) {
@@ -148,7 +150,7 @@ exports.init = function(grunt, helpers) {
   // Commonly-used prompt options with meaningful default values.
   exports.prompt = function(name, altDefault) {
     // Clone the option so the original options object doesn't get modified.
-    var option = grunt.util._.clone(exports.prompts[name] || {});
+    var option = _.clone(exports.prompts[name] || {});
     option.name = name;
 
     var defaults = helpers.readDefaults('defaults.json');

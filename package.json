@@ -33,7 +33,9 @@
     "semver": "~1.0.14",
     "hooker": "~0.2.3",
     "colors": "~0.6.0-1",
-    "grunt": "~0.4.0"
+    "grunt": "~0.4.0",
+    "lodash": "~2.4.1",
+    "async": "~0.2.10"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.8.0",

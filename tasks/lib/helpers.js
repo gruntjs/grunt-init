@@ -13,6 +13,7 @@ exports.init = function(grunt) {
 
   // Nodejs libs.
   var path = require('path');
+  var _ = require('lodash');
 
   // Windows?
   var win32 = process.platform === 'win32';
@@ -106,7 +107,7 @@ exports.init = function(grunt) {
     exports.searchDirs.push(path.resolve(__dirname, '../../templates'));
 
     // Search dirs should be unique and fully normalized absolute paths.
-    exports.searchDirs = grunt.util._.uniq(exports.searchDirs).map(function(filepath) {
+    exports.searchDirs = _.uniq(exports.searchDirs).map(function(filepath) {
       return path.resolve(filepath);
     });
 
@@ -134,7 +135,7 @@ exports.init = function(grunt) {
         // Since extras path order goes from most-specific to least-specific, only
         // add-in properties that don't already exist.
         filepaths.forEach(function(filepath) {
-          grunt.util._.defaults(result, grunt.file.readJSON(filepath));
+          _.defaults(result, grunt.file.readJSON(filepath));
         });
       }
     }

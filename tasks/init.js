@@ -15,6 +15,7 @@ module.exports = function(grunt) {
 
   // External libs.
   var semver = require('semver');
+  var _ = require('lodash');
 
   // Internal libs.
   var git = require('./lib/git').init(grunt);
@@ -76,7 +77,7 @@ module.exports = function(grunt) {
     // These generally follow the node "prompt" module convention, except:
     // * The "default" value can be a function which is executed at run-time.
     // * An optional "sanitize" function has been added to post-process data.
-    grunt.util._.extend(prompt.prompts, {
+    _.extend(prompt.prompts, {
       name: {
         message: 'Project name',
         default: function(value, data, done) {
@@ -276,7 +277,7 @@ module.exports = function(grunt) {
     var pathPrefix = name + '/root/';
 
     // Useful init sub-task-specific utilities.
-    var init = grunt.util._.extend(helpers, {
+    var init = _.extend(helpers, {
       // Expose prompt interface on init object.
       process: prompt.process,
       prompt: prompt.prompt,
@@ -367,7 +368,7 @@ module.exports = function(grunt) {
       // Iterate over all files in the passed object, copying the source file to
       // the destination, processing the contents.
       copyAndProcess: function(files, props, options) {
-        options = grunt.util._.defaults(options || {}, {
+        options = _.defaults(options || {}, {
           process: function(contents) {
             return grunt.template.process(contents, {data: props, delimiters: 'init'});
           }
