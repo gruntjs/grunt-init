@@ -411,7 +411,14 @@ module.exports = function(grunt) {
           });
         }
         // Other stuff.
-        if ('repository' in props) { pkg.repository = {type: 'git', url: props.repository}; }
+        if ('repository' in props) {
+          // Detect whether repository was given as string or object
+          if (typeof props.repository === 'string') {
+            pkg.repository = {type: 'git', url: props.repository};
+          } else {
+            pkg.repository = props.repository;
+          }
+        }
         if ('bugs' in props) { pkg.bugs = {url: props.bugs}; }
         if (props.licenses) {
           pkg.licenses = props.licenses.map(function(license) {
