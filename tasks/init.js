@@ -336,7 +336,9 @@ module.exports = function(grunt) {
       addLicenseFiles: function(files, licenses) {
         licenses.forEach(function(license) {
           var fileobj = helpers.expand({filter: 'isFile'}, 'licenses/LICENSE-' + license)[0];
-          files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
+          if(fileobj) {
+            files['LICENSE-' + license] = fileobj.rel;
+          }
         });
       },
       // Given an absolute or relative source path, and an optional relative
