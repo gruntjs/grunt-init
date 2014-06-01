@@ -469,9 +469,9 @@ module.exports = function(grunt) {
         }
       },
       // Run npm install in project's directory and then call done if it is specified.
-      // The second parameter allows to skip npm install if parameter's value is falsy.
-      runNpmInstall: function(done, required) {
-        if (arguments.length < 2 || required) {
+      // The first parameter allows to skip npm install if parameter's value is falsy (the default value is true).
+      runNpmInstall: function(required, done) {
+        if (arguments.length < 1 || required) {
           grunt.log.writeln('\nnpm install...');
           // Run npm install in project's directory
           grunt.util.spawn({cmd: 'npm', args: ['install'],
