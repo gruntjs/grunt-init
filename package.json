@@ -24,13 +24,14 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "prompt": "~0.1.12",
-    "semver": "~1.0.14",
-    "hooker": "~0.2.3",
+    "async": "~0.2.10",
     "colors": "~0.6.0-1",
     "grunt": "~0.4.0",
+    "hooker": "~0.2.3",
     "lodash": "~2.4.1",
-    "async": "~0.2.10"
+    "prompt": "~0.1.12",
+    "semver": "~1.0.14",
+    "spdx": "^0.4.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.8.0",

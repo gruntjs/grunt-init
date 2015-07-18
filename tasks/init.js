@@ -15,6 +15,7 @@ module.exports = function(grunt) {
 
   // External libs.
   var semver = require('semver');
+  var spdx = require('spdx');
   var _ = require('lodash');
 
   // Internal libs.
@@ -125,6 +126,7 @@ module.exports = function(grunt) {
       keywords: {
         message: 'Project keywords (separated by space)',
         sanitize: function(value, data, done) { 
+          /*jshint laxbreak:true*/
           done(null, value 
                         ? value.replace(/^\s+|\s+$/g, '')
                                .split(/\s+/)
@@ -203,6 +205,14 @@ module.exports = function(grunt) {
           done(null, git.githubUrl(data.repository, 'issues') || 'none');
         },
         warning: 'Should be a public URL.'
+      },
+      license: {
+        message: 'License',
+        default: 'MIT',
+        validator: spdx.valid,
+        warning: 'Must be a valid SPDX License Expression (spdx.org). Built-in ' +
+          'licenses are: ' + helpers.availableLicenses().join(' ') + ', but you may ' +
+          'specify any valid license expression.'
       },
       licenses: {
         message: 'Licenses',
@@ -412,7 +422,7 @@ module.exports = function(grunt) {
       writePackageJSON: function(filename, props, callback) {
         var pkg = {};
         // Basic values.
-        ['name', 'title', 'description', 'version', 'homepage'].forEach(function(prop) {
+        ['name', 'title', 'description', 'version', 'homepage', 'license'].forEach(function(prop) {
           if (prop in props) { pkg[prop] = props[prop]; }
         });
         // Author.
@@ -487,6 +497,7 @@ module.exports = function(grunt) {
           grunt.util.spawn({cmd: 'npm', args: ['install'],
                             opts: {cwd: init.destpath, stdio: 'inherit'}},
               function(error, result, code) {
+                /*jshint unused:vars*/
                 if (done) {
                   done();
                 }
