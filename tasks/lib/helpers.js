@@ -142,5 +142,16 @@ exports.init = function(grunt) {
     return result;
   };
 
+  exports.isBinary = function(filepath) {
+    var binaryExtensions = [
+      'dds', 'eot', 'gif', 'ico', 'jar', 'jpeg', 'jpg',
+      'pdf', 'png', 'swf', 'tga', 'ttf', 'zip'
+    ];
+
+    var ext = filepath.replace(/.*[\.\/]/, '').toLowerCase();
+
+    return grunt.util._.contains(binaryExtensions, ext);
+  };
+
   return exports;
 };

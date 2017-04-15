@@ -403,6 +403,11 @@ module.exports = function(grunt) {
             }
             srcpath = helpers.getFile(srcpath);
           }
+
+          if (helpers.isBinary(srcpath)) {
+            o.noProcess = true;
+          }
+
           // Copy!
           init.copy(srcpath, destpath, o);
         });
