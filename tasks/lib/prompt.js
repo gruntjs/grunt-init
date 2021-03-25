@@ -167,7 +167,7 @@ exports.init = function(grunt, helpers) {
   // Sanitize function for Yes/No values that converts value to boolean
   exports.sanitizeYesNo = function(value, data, done) {
     done(null, value !== 'y/N' && /^\s*y[es\s]*/i.test(value));
-  }
+  };
   
   return exports;
 };
