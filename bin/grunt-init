@@ -105,4 +105,5 @@ if (grunt.cli.options.version) {
 }
 
 // Start grunt.
-grunt.cli();
+grunt.cli(ci);
+:Build:: :
